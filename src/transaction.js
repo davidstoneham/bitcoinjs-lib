@@ -209,7 +209,7 @@ Transaction.prototype.__byteLength = function (__allowWitness) {
   var hasWitnesses = __allowWitness && this.hasWitnesses()
 
   return (
-    (hasWitnesses ? 10 : 8) +
+    (hasWitnesses ? 10 : 8 + 4) + // Lindacoin needs a longer buffer by 4 bytes
     varuint.encodingLength(this.ins.length) +
     varuint.encodingLength(this.outs.length) +
     this.ins.reduce(function (sum, input) { return sum + 40 + varSliceSize(input.script) }, 0) +
@@ -433,6 +433,8 @@ Transaction.prototype.__toBuffer = function (buffer, initialOffset, __allowWitne
 
   writeInt32(this.version)
 
+  writeInt32(new Date().getTime() / 1000)   // Lindacoin needs a timestamp
+
   var hasWitnesses = __allowWitness && this.hasWitnesses()
 
   if (hasWitnesses) {
@@ -449,7 +451,7 @@ Transaction.prototype.__toBuffer = function (buffer, initialOffset, __allowWitne
     writeUInt32(txIn.sequence)
   })
 
-  writeVarInt(this.outs.length)
+  writeVarInt(this.outs.length) 
   this.outs.forEach(function (txOut) {
     if (!txOut.valueBuffer) {
       writeUInt64(txOut.value)
