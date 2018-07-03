@@ -23,6 +23,7 @@ function vectorSize (someVector) {
 
 function Transaction () {
   this.version = 1
+  this.timestamp = 0 // LindaCoin needs a timestamp
   this.locktime = 0
   this.ins = []
   this.outs = []
@@ -90,6 +91,8 @@ Transaction.fromBuffer = function (buffer, __noStrict) {
 
   var tx = new Transaction()
   tx.version = readInt32()
+
+  tx.timestamp = readInt32() // LindaCoin needs a timestamp
 
   var marker = buffer.readUInt8(offset)
   var flag = buffer.readUInt8(offset + 1)
@@ -209,7 +212,7 @@ Transaction.prototype.__byteLength = function (__allowWitness) {
   var hasWitnesses = __allowWitness && this.hasWitnesses()
 
   return (
-    (hasWitnesses ? 10 : 8 + 4) + // Lindacoin needs a longer buffer by 4 bytes
+    (hasWitnesses ? 10 : 8 + 4) + // LindaCoin needs a longer buffer by 4 bytes
     varuint.encodingLength(this.ins.length) +
     varuint.encodingLength(this.outs.length) +
     this.ins.reduce(function (sum, input) { return sum + 40 + varSliceSize(input.script) }, 0) +
@@ -433,7 +436,7 @@ Transaction.prototype.__toBuffer = function (buffer, initialOffset, __allowWitne
 
   writeInt32(this.version)
 
-  writeInt32(new Date().getTime() / 1000)   // Lindacoin needs a timestamp
+  writeInt32(new Date().getTime() / 1000)   // LindaCoin needs a timestamp
 
   var hasWitnesses = __allowWitness && this.hasWitnesses()
 
