@@ -1,10 +1,10 @@
 {
   "name": "bitcoinjs-lib",
-  "version": "3.3.2",
+  "version": "4.0.1",
   "description": "Client-side Bitcoin JavaScript library",
   "main": "./src/index.js",
   "engines": {
-    "node": ">=4.0.0"
+    "node": ">=8.0.0"
   },
   "keywords": [
     "bitcoinjs",
@@ -31,7 +31,7 @@
   ],
   "dependencies": {
     "bech32": "^1.1.2",
-    "bip32": "^0.1.0",
+    "bip32": "^1.0.0",
     "bip66": "^1.1.0",
     "bitcoin-ops": "^1.4.0",
     "bs58check": "^2.0.0",
@@ -41,16 +41,16 @@
     "pushdata-bitcoin": "^1.0.1",
     "randombytes": "^2.0.1",
     "safe-buffer": "^5.1.1",
-    "tiny-secp256k1": "^0.1.0",
+    "tiny-secp256k1": "^1.0.0",
     "typeforce": "^1.11.3",
     "varuint-bitcoin": "^1.0.4",
     "wif": "^2.0.1"
   },
   "devDependencies": {
-    "bigi": "^1.4.2",
     "bip39": "^2.3.0",
     "bip65": "^1.0.1",
     "bip68": "^1.0.3",
+    "bn.js": "^4.11.8",
     "bs58": "^4.0.0",
     "dhttp": "^2.5.0",
     "hoodwink": "^1.0.0",
